@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Copy git repo') {
+            steps {
+                sh "ls -lsa"
+            }
+        }
+        stage('Stage git') {
+            steps {
+                script{
+                    sh "git version"
+                }
+            }
+        }
+
+        stage('Stage-GIT_COMMIT') {
+            steps {
+                 echo "${GIT_COMMIT}"
+            }
+        }
+
+        stage('Stage-BUILD_NUMBER') {
+            steps {
+                echo "${BUILD_NUMBER}"
+            }
+        }
+    }
+}
