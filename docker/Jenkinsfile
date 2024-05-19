@@ -12,9 +12,18 @@ pipeline{
                 sh 'docker build -t ${IMAGE_NAME}:${BUILD_NUMBER} ./docker'
             }
         }
-     
-
-      
+        
+        stage("Docker run"){
+            steps{
+                input message: 'Continue?'
+                sh """
+                if docker ps -a | grep -q ${env.NameContainer}; then 
+                    docker stop ${env.NameContainer} && docker rm ${env.NameContainer}
+                fi
+                docker run -d --name ${env.NameContainer} -p 8090:80 ${IMAGE_NAME}:${BUILD_NUMBER}
+                """
+            }
+        }
     
     }
     
