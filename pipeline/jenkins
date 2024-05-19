@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage('Copy git repo') {
+        stage('Stage 1') {
             steps {
                 sh "ls -lsa"
             }
