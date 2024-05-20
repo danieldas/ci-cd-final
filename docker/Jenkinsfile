@@ -2,7 +2,7 @@ pipeline{
     agent any
 
     environment {
-        IMAGE_NAME = "app-php-final"
+        IMAGE_NAME = "daniel037oc/app-php-final"
         DOCKERHUB_CREDS = credentials("dockerhub-final")
         NameContainer = "app-php-final"
     }
@@ -30,7 +30,7 @@ pipeline{
         stage("Docker push"){
             steps{
                 sh 'echo ${DOCKERHUB_CREDS_PSW} | docker login -u ${DOCKERHUB_CREDS_USR} --password-stdin' 
-                sh 'docker push daniel037oc/${IMAGE_NAME}:${BUILD_NUMBER}'
+                sh 'docker push ${IMAGE_NAME}:${BUILD_NUMBER}'
             }
         }
 
