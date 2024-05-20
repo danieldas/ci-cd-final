@@ -3,6 +3,7 @@ pipeline{
 
     environment {
         IMAGE_NAME = "app-php-final"
+        DOCKERHUB_CREDS = credentials("dockerhub-final")
         NameContainer = "app-php-final"
     }
 
@@ -10,6 +11,13 @@ pipeline{
         stage('Build image') {
             steps {
                 sh 'docker build -t ${IMAGE_NAME}:${BUILD_NUMBER} ./docker'
+            }
+        }
+
+        stage("Docker push"){
+            steps{
+                sh 'echo ${DOCKERHUB_CREDS_PSW} | docker login -u ${DOCKERHUB_CREDS_USR} --password-stdin' 
+                sh 'docker push ${IMAGE_NAME}:${BUILD_NUMBER}'
             }
         }
         
